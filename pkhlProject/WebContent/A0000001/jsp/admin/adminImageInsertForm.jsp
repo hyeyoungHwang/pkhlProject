@@ -7,7 +7,7 @@
 <title>메인이미지 등록</title>
 
 </head>
-<body>
+<body>  
 <section class="callaction">
 	<div class="container">
 		<div class="row">
