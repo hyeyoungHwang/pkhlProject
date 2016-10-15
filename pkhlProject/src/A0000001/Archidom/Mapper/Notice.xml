@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org/DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+   <typeAlias alias="returnMap" type="java.util.HashMap"/>
+   
+   <!-- Notice 게시글 카운트 -->
+   <select id="NoticeDAO.noticeListCount" parameterClass="returnMap" resultClass="java.lang.Integer">
+      SELECT COUNT(*) 
+      FROM NOTICE 
+      WHERE USE_YN ='Y'
+      <isNotEmpty property="searchValue">
+         <isEqual property="searchType" compareValue="listNum">
+         AND NTC_NUM = #searchValue#
+         </isEqual>
+         <isEqual property="searchType" compareValue="writeName">
+         AND ADMIN_ID LIKE CONCAT('%',#searchValue#,'%')
+         </isEqual>
+         <isEqual property="searchType" compareValue="titlecontent">
+         AND CONCAT(NTC_TITLE,NTC_CONTENT) LIKE CONCAT('%',#searchValue#,'%')
+         </isEqual>
+      </isNotEmpty>
+   </select>
+
+   <!-- Notice 게시글 조회 -->
+   <select id="NoticeDAO.noticeList" parameterClass="returnMap" resultClass="returnMap">
+      SELECT NTC_NUM, ADMIN_ID, NTC_TITLE, NTC_HIT, DATE_FORMAT(REG_DT,"%Y-%m-%d") AS REG_DT 
+      FROM NOTICE 
+      WHERE 1=1 AND USE_YN='Y' 
+      <isNotEmpty property="searchValue">
+         <isEqual property="searchType" compareValue="listNum">
+         AND NTC_NUM = #searchValue#
+         </isEqual>
+         <isEqual property="searchType" compareValue="writeName">
+         AND ADMIN_ID LIKE CONCAT('%',#searchValue#,'%')
+         </isEqual>
+         <isEqual property="searchType" compareValue="titlecontent">
+         AND CONCAT(NTC_TITLE,NTC_CONTENT) LIKE CONCAT('%',#searchValue#,'%')
+         </isEqual>
+      </isNotEmpty>
+      ORDER BY NTC_NUM DESC
+      LIMIT #startRow# , #listsize#
+   </select>
+   
+   <!-- Notice 게시글 등록 -->
+   <insert id="NoticeDAO.noticeInsert" parameterClass="returnMap">
+      INSERT INTO NOTICE(ADMIN_ID, ADMIN_PWD, NTC_TITLE, NTC_CONTENT)
+      VALUES(#admin_id#, #admin_pw#, #notice_title#, #notice_content#)
+   </insert>
+   
+   <select id="NoticeDAO.noticeDetail" parameterClass="returnMap" resultClass="returnMap">
+      SELECT NTC_NUM, ADMIN_ID, NTC_TITLE, NTC_CONTENT, NTC_HIT, REG_DT
+      FROM NOTICE 
+      WHERE NTC_NUM = #notice_num#
+   </select>
+   
+   <!-- Notice 게시글 조회수 -->
+   <update id="NoticeDAO.noticeHitUpdate" parameterClass="returnMap">
+      UPDATE NOTICE 
+      SET NTC_HIT = NTC_HIT + 1 
+      WHERE NTC_NUM = #notice_num#
+   </update>
+   
+   <!-- Notie 게시글 수정 -->
+   <update id="NoticeDAO.noticeUpdate" parameterClass="returnMap">
+      UPDATE NOTICE 
+      SET NTC_TITLE = #notice_title#, NTC_CONTENT = #notice_content#
+      WHERE NTC_NUM = #notice_num#
+   </update>
+   
+   <!-- Notie 게시글 삭제 -->
+   <update id="NoticeDAO.noticeDelete" parameterClass="returnMap">
+      UPDATE NOTICE 
+      SET USE_YN = 'N' 
+      WHERE NTC_NUM = #notice_num#
+   </update>
+</sqlMap>

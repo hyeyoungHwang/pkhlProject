@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org/DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+   <typeAlias alias="returnMap" type="java.util.HashMap"/>
+   
+   <!-- QnA 게시글 카운트 -->
+   <select id="QnADAO.qnaListCount" parameterClass="returnMap" resultClass="java.lang.Integer">
+      SELECT COUNT(*) 
+      FROM QNA_BOARD 
+      WHERE USE_YN ='Y'
+      <isNotEmpty property="searchValue">
+         <isEqual property="searchType" compareValue="listNum">
+         AND QNA_NUM = #searchValue#
+         </isEqual>
+         <isEqual property="searchType" compareValue="writeName">
+         AND QNA_NAME LIKE CONCAT('%',#searchValue#,'%')
+         </isEqual>
+         <isEqual property="searchType" compareValue="titlecontent">
+         AND CONCAT(QNA_TITLE,QNA_CONTENT) LIKE CONCAT('%',#searchValue#,'%')
+         </isEqual>
+      </isNotEmpty>
+   </select> 	
+   
+   <!-- QnA 게시글 조회 -->
+   <select id="QnADAO.qnaList" parameterClass="returnMap" resultClass="returnMap">
+      SELECT QNA_NUM, QNA_NAME, QNA_TITLE, QNA_HIT, QNA_OPEN_YN, DATE_FORMAT(REG_DT,"%Y-%m-%d") AS REG_DT 
+      FROM QNA_BOARD 
+      WHERE 1=1 AND USE_YN='Y' 
+      <isNotEmpty property="searchValue">
+         <isEqual property="searchType" compareValue="listNum">
+         AND QNA_NUM = #searchValue#
+         </isEqual>
+         <isEqual property="searchType" compareValue="writeName">
+         AND QNA_NAME LIKE CONCAT('%',#searchValue#,'%')
+         </isEqual>
+         <isEqual property="searchType" compareValue="titlecontent">
+         AND CONCAT(QNA_TITLE,QNA_CONTENT) LIKE CONCAT('%',#searchValue#,'%')
+         </isEqual>
+      </isNotEmpty>
+      ORDER BY QNA_NUM DESC
+      LIMIT #startRow# , #listsize#
+   </select>
+   
+   <!-- QnA 게시글 등록 -->
+   <insert id="QnADAO.qnaInsert" parameterClass="returnMap">
+      INSERT INTO QNA_BOARD(QNA_NAME, QNA_PWD, QNA_TITLE, QNA_CONTENT, QNA_OPEN_YN)
+      VALUES(#qna_name#, #qna_pwd#, #qna_title#, #qna_content#, #qna_open_yn#)
+   </insert>
+   
+   <!-- QnA 게시글 상세보기 -->
+   <select id="QnADAO.qnaDetail" parameterClass="returnMap" resultClass="returnMap">
+      SELECT QNA_NUM, QNA_NAME, QNA_TITLE, QNA_CONTENT, QNA_HIT, REG_DT
+      FROM QNA_BOARD 
+      WHERE QNA_NUM = #qna_num#
+   </select>
+   
+   <!-- QnA 게시글 조회수 -->
+   <update id="QnADAO.qnaHitUpdate" parameterClass="returnMap">
+      UPDATE QNA_BOARD 
+      SET QNA_HIT = QNA_HIT + 1 
+      WHERE QNA_NUM = #qna_num#
+   </update>
+   
+   <!-- QnA 게시글 수정 -->
+   <update id="QnADAO.qnaUpdate" parameterClass="returnMap">
+      UPDATE QNA_BOARD 
+      SET QNA_NAME = #qna_name#, QNA_TITLE = #qna_title#, QNA_CONTENT = #qna_content#
+      WHERE QNA_NUM = #qna_num#
+   </update>
+   
+   <!-- QnA 게시글 삭제 -->
+   <update id="QnADAO.qnaDelete" parameterClass="returnMap">
+      UPDATE QNA_BOARD 
+      SET USE_YN = 'N' 
+      WHERE QNA_NUM = #qna_num#
+   </update>
+   
+   <!-- 유저 체크 -->
+   <select id="QnADAO.qnaUserCheck" parameterClass="returnMap" resultClass="java.lang.Integer">
+      SELECT count(*) FROM QNA_BOARD
+      WHERE QNA_NUM = #qna_num# AND QNA_PWD = #qna_pwd#
+   </select>
+   
+   <!-- QnA 댓글 조회 -->
+   <select id="QnADAO.ansList" parameterClass="returnMap" resultClass="returnMap">
+      SELECT ANS_NUM, QNA_NUM, ANS_CONTENT, REG_ID, REG_DT, UPD_ID, UPD_DT
+      FROM QNA_ANSWER
+      WHERE USE_YN = 'Y'
+      <isNotEmpty property="qna_num">
+         AND QNA_NUM = #qna_num#
+      </isNotEmpty>
+   </select>
+   
+   <!-- QnA 댓글 작성 -->
+   <insert id="QnADAO.ansInsert" parameterClass="returnMap">
+      INSERT INTO QNA_ANSWER(QNA_NUM, ANS_CONTENT, REG_ID, UPD_ID) 
+      VALUES(#qna_num#, #ans_content#, #admin_id#, #admin_id#)
+   </insert>
+
+   <!-- QnA 댓글 삭제 -->
+   <update id="QnADAO.ansDelete" parameterClass="returnMap">
+      UPDATE QNA_ANSWER 
+      SET USE_YN='N' 
+      WHERE    QNA_NUM = #qna_num#
+            AND ANS_NUM = #ans_num# 
+   </update>
+   
+   <!-- QnA 댓글 수정 -->
+   <update id="QnADAO.ansUpdate" parameterClass="returnMap">
+      UPDATE QNA_ANSWER 
+      SET UPD_ID = #admin_id#, ANS_CONTENT = #upd_ans_content#
+      WHERE    QNA_NUM = #qna_num#
+            AND ANS_NUM = #ans_num# 
+   </update>
+   
+</sqlMap>

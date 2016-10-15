@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org/DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+   <typeAlias alias="returnMap" type="java.util.HashMap"/>
+   
+   <select id="AdminDAO.adminLogin" parameterClass="returnMap" resultClass="returnMap">
+      SELECT ADMIN_PW FROM ADMIN WHERE ADMIN_ID = #admin_id#
+   </select>
+   
+   
+   <select id="AdminDAO.adminImageList" resultClass="returnMap">
+      SELECT AIB_NUM, AIB_IMAGE FROM ADMIN_IMAGE_BOARD WHERE USE_YN='Y'
+   </select>
+   
+   <insert id="AdminDAO.adminImageInsert" parameterClass="returnMap">
+      INSERT INTO ADMIN_IMAGE_BOARD(AIB_IMAGE)
+      VALUES(#filename#)
+   </insert>
+   
+   <update id="AdminDAO.adminImageDelete" parameterClass="returnMap">
+      UPDATE ADMIN_IMAGE_BOARD
+      SET USE_YN='N'
+      WHERE AIB_NUM = #num#
+   </update>
+</sqlMap>

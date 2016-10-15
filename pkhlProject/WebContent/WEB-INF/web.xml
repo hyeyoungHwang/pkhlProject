@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>pkhlProject</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- PKHL -->
+  <servlet>
+    <servlet-name>PKHL</servlet-name>
+    <servlet-class>PKHL.Comm.Controller.PKHLController</servlet-class>
+    <init-param>
+      <param-name>settingConfig</param-name>
+      <param-value>D:\pkhlProject\workspace2\pkhlProject\WebContent\WEB-INF\properties\PKHL.properties</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PKHL</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Archidom_A0000001 -->
+  <servlet>
+    <servlet-name>Archidom_A0000001</servlet-name>
+    <servlet-class>A0000001.Archidom.Controller.A0000001Controller</servlet-class>
+    <init-param>
+      <param-name>settingConfig</param-name>
+      <param-value>D:\pkhlProject\workspace2\pkhlProject\WebContent\WEB-INF\properties\A0000001.properties</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Archidom_A0000001</servlet-name>
+    <url-pattern>*.a1</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Archidom_A0000002 -->
+  <servlet>
+    <servlet-name>Archidom_A0000002</servlet-name>
+    <servlet-class>A0000002.Archidom.Controller.A0000002Controller</servlet-class>
+    <init-param>
+      <param-name>settingConfig</param-name>
+      <param-value>D:\pkhlProject\workspace2\pkhlProject\WebContent\WEB-INF\properties\A0000002.properties</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Archidom_A0000002</servlet-name>
+    <url-pattern>*.a2</url-pattern>
+  </servlet-mapping>
+  
+  <!-- ModelHouse_A0000003 -->
+  <servlet>
+    <servlet-name>ModelHouse_A0000003</servlet-name>
+    <servlet-class>A0000003.ModelHouse.Controller.A0000003Controller</servlet-class>
+    <init-param>
+      <param-name>settingConfig</param-name>
+      <param-value>D:\pkhlProject\workspace2\pkhlProject\WebContent\WEB-INF\properties\A0000003.properties</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModelHouse_A0000003</servlet-name>
+    <url-pattern>*.a3</url-pattern>
+  </servlet-mapping>
+</web-app>

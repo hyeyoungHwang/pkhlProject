@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org/DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+   <typeAlias alias="returnMap" type="java.util.HashMap"/>
+   
+
+   
+   <!-- QnA 게시글 등록 -->
+   <insert id="JoinDAO.joinInsert" parameterClass="returnMap">
+      INSERT INTO BSNS_USER
+      (
+	      BSNS_CODE
+	      , USER_ID
+	      , USER_PW
+	      , USER_NM
+	      , USER_PHONE
+	      , USER_TEL
+	      , USER_EMAIL
+	      , ZIP
+	      , ADDR
+	      , DETAIL_ADDR
+	      , REG_ID
+	      , REG_DT
+	      , UPD_ID
+	      , UPD_DT
+	      , USE_YN
+      )
+      VALUES
+      (
+	      #bsns_code#
+	      , #user_id#
+	      , #user_pw#
+	      , #user_nm#
+	      , #user_phone#
+	      , #user_tel#
+	      , #user_email#
+	      , #zip#
+	      , #addr#
+	      , #detail_addr#
+	      , #user_id#
+	      , now()
+	      , #user_id#
+	      , now()
+	      , 'Y'
+      )
+   </insert>
+  
+  <select id="JoinDAO.selectBsnsCode" parameterClass="returnMap" resultClass="java.lang.String">
+  	SELECT ifnull(MAX(BSNS_CODE), 0) + 1
+	FROM BSNS_USER
+  </select>
+  
+   
+</sqlMap>
