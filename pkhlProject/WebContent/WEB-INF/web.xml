@@ -10,27 +10,13 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
-  <!-- PKHL -->
-  <servlet>
-    <servlet-name>PKHL</servlet-name>
-    <servlet-class>PKHL.Comm.Controller.PKHLController</servlet-class>
-    <init-param>
-      <param-name>settingConfig</param-name>
-      <param-value>D:\pkhlProject\workspace2\pkhlProject\WebContent\WEB-INF\properties\PKHL.properties</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PKHL</servlet-name>
-    <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  
   <!-- Archidom_A0000001 -->
   <servlet>
     <servlet-name>Archidom_A0000001</servlet-name>
     <servlet-class>A0000001.Archidom.Controller.A0000001Controller</servlet-class>
     <init-param>
       <param-name>settingConfig</param-name>
-      <param-value>D:\pkhlProject\workspace2\pkhlProject\WebContent\WEB-INF\properties\A0000001.properties</param-value>
+      <param-value>D:\pkhlProject\workspace\pkhlProject\pkhlProject\WebContent\WEB-INF\properties\A0000001.properties</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
@@ -44,7 +30,7 @@
     <servlet-class>A0000002.Archidom.Controller.A0000002Controller</servlet-class>
     <init-param>
       <param-name>settingConfig</param-name>
-      <param-value>D:\pkhlProject\workspace2\pkhlProject\WebContent\WEB-INF\properties\A0000002.properties</param-value>
+      <param-value>D:\pkhlProject\workspace\pkhlProject\pkhlProject\WebContent\WEB-INF\properties\A0000002.properties</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
@@ -58,7 +44,7 @@
     <servlet-class>A0000003.ModelHouse.Controller.A0000003Controller</servlet-class>
     <init-param>
       <param-name>settingConfig</param-name>
-      <param-value>D:\pkhlProject\workspace2\pkhlProject\WebContent\WEB-INF\properties\A0000003.properties</param-value>
+      <param-value>D:\pkhlProject\workspace\pkhlProject\pkhlProject\WebContent\WEB-INF\properties\A0000003.properties</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>

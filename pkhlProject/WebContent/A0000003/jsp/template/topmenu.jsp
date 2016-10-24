@@ -13,6 +13,6 @@
 	<a href="index.a3">방화동</a> │ 
 	<a href="index.a3">마곡지구</a> │ 
 	<a href="index.a3">환경</a> │ 
-	<a href="index.a3">상담</a>
+	<a href="ntcList.a3">상담</a>
 </body>
 </html>

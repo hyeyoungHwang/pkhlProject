@@ -5,6 +5,7 @@
 <head>
 <title>PKHL</title>
 </head>
+
 <body>
 <div id="">
 	<!-- 홈 관리자 -->
@@ -24,3 +25,6 @@
 </div>
 </body>
 </html>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../A0000003/js/ntc.js"></script>

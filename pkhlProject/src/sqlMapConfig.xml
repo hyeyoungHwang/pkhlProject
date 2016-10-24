@@ -26,5 +26,7 @@
       <sqlMap resource = "/A0000001/Archidom/Mapper/Admin.xml" />
       <sqlMap resource = "/A0000001/Archidom/Mapper/Notice.xml" />
       
-       <sqlMap resource = "/A0000003/ModelHouse/Mapper/Join.xml" />
+      <sqlMap resource = "/A0000003/ModelHouse/Mapper/Join.xml" />
+      <sqlMap resource = "/A0000003/ModelHouse/Mapper/Ntc.xml" />
+      <sqlMap resource = "/A0000003/ModelHouse/Mapper/User.xml" />
 </sqlMapConfig>

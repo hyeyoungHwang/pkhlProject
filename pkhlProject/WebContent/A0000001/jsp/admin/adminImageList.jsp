@@ -10,7 +10,7 @@
 <body>  
 <script type="text/javascript">
 
-function delImage(num, img) {
+function delImage(num, img) { 
 	$("#num").val(num);
 	$("#img").val(img);
 	$("#adminImageForm").attr("action", "adminImageDelete.a1");

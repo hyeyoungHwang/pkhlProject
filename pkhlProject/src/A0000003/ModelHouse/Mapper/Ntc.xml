@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org/DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+	<typeAlias alias="returnMap" type="java.util.HashMap"/>
+	
+	<!-- Ntc 게시글 카운트 -->
+	<select id="NtcDAO.ntcListCount" parameterClass="returnMap" resultClass="java.lang.Integer">
+		SELECT COUNT(*) 
+		FROM BSNS_NTC_BOARD 
+		WHERE 1=1
+		AND USE_YN ='Y'
+		AND BSNS_CODE = #bsns_code#
+		<isNotEmpty property="searchValue">
+			<isEqual property="searchType" compareValue="listNum">
+			AND NTC_SN = #searchValue#
+			</isEqual>
+			<isEqual property="searchType" compareValue="writeName">
+			AND USER_ID LIKE CONCAT('%',#searchValue#,'%')
+			</isEqual>
+			<isEqual property="searchType" compareValue="titlecontent">
+			AND CONCAT(NTC_TITLE,NTC_CONTENT) LIKE CONCAT('%',#searchValue#,'%')
+			</isEqual>
+		</isNotEmpty>
+	</select>
+
+	<!-- Ntc 게시글 조회 -->
+	<select id="NtcDAO.ntcList" parameterClass="returnMap" resultClass="returnMap">
+		SELECT NTC_SN
+			  ,USER_ID
+			  ,NTC_TITLE
+			  ,NTC_HIT
+			  ,DATE_FORMAT(REG_DT,"%Y-%m-%d") AS REG_DT 
+		FROM BSNS_NTC_BOARD 
+		WHERE 1=1 
+		AND USE_YN='Y'
+		AND BSNS_CODE = #bsns_code#
+		<isNotEmpty property="searchValue">
+			<isEqual property="searchType" compareValue="listNum">
+			AND NTC_SN = #searchValue#
+			</isEqual>
+			<isEqual property="searchType" compareValue="writeName">
+			AND USER_ID LIKE CONCAT('%',#searchValue#,'%')
+			</isEqual>
+			<isEqual property="searchType" compareValue="titlecontent">
+			AND CONCAT(NTC_TITLE,NTC_CONTENT) LIKE CONCAT('%',#searchValue#,'%')
+			</isEqual>
+		</isNotEmpty>
+		ORDER BY NTC_SN DESC
+		LIMIT #startRow# , #listsize#
+	</select>
+
+	<!-- Ntc 게시글 등록 -->
+	<insert id="NtcDAO.ntcInsert" parameterClass="returnMap">
+		INSERT INTO BSNS_NTC_BOARD(
+				BSNS_CODE
+				,USER_ID
+				,NTC_TITLE
+				,NTC_CONTENT
+				,REG_ID
+				,REG_DT
+			)VALUES(
+				#bsns_code#
+				,#user_id#
+				,#ntc_title#
+				,#ntc_content#
+				,#user_id#
+				,now()
+			)
+	</insert>
+
+	<!-- Ntc 게시글 상세조회 -->
+	<select id="NtcDAO.ntcDetail" parameterClass="returnMap" resultClass="returnMap">
+		SELECT	NTC_SN
+				,USER_ID
+				,NTC_TITLE
+				,NTC_CONTENT
+				,NTC_HIT
+				,REG_DT
+		FROM BSNS_NTC_BOARD 
+		WHERE 1=1
+		AND NTC_SN = #ntc_sn#
+		AND BSNS_CODE = #bsns_code#
+	</select>
+
+	<!-- Ntc 게시글 조회수 -->
+	<update id="NtcDAO.ntcHitUpdate" parameterClass="returnMap">
+		UPDATE BSNS_NTC_BOARD 
+		SET NTC_HIT = NTC_HIT + 1 
+		WHERE 1=1
+		AND USE_YN = 'Y'
+		AND NTC_SN = #ntc_sn#
+		AND BSNS_CODE = #bsns_code#
+	</update>
+
+	<!-- Notie 게시글 수정 -->
+	<update id="NtcDAO.ntcUpdate" parameterClass="returnMap">
+		UPDATE BSNS_NTC_BOARD 
+		SET NTC_TITLE = #notice_title#
+		   ,NTC_CONTENT = #notice_content#
+		WHERE 1=1
+		AND USE_YN = 'Y'
+		AND NTC_SN = #ntc_sn#
+		AND BSNS_CODE = #bsns_code#
+	</update>
+
+	<!-- Notie 게시글 삭제 -->
+	<update id="NtcDAO.ntcDelete" parameterClass="returnMap">
+		UPDATE BSNS_NTC_BOARD 
+		SET USE_YN = 'N' 
+		WHERE 1=1
+		AND USE_YN = 'Y'
+		AND NTC_SN = #ntc_sn#
+		AND BSNS_CODE = #bsns_code#
+	</update>
+</sqlMap>

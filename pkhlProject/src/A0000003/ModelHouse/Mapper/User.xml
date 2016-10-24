@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org/DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+
+	<typeAlias alias="returnMap" type="java.util.HashMap"/>
+	
+	<!-- User Login -->
+	<select id="UserDAO.userLogin" parameterClass="returnMap" resultClass="returnMap">
+		/* User Login - UserDAO.userLogin */
+		SELECT USER_ID
+			   ,USER_PW
+			   ,USER_AUTH 
+		FROM BSNS_USER 
+		WHERE 1=1
+		  AND USE_YN = 'Y'
+		  AND BSNS_CODE = #bsns_code#
+		  AND USER_ID = #user_id#
+	</select>
+
+</sqlMap>

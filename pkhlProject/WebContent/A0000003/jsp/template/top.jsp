@@ -8,7 +8,15 @@
 <title>PKHL</title>
 </head>
 <body>
-	 <a href="joinAgreement.a3">회원가입</a> │ 
-	 <a href="index.a3">로그인</a>
+	 ${sessionScope.bsns_code}
+	 <c:if test="${empty sessionScope.user_id}">
+	 	<a href="joinAgreement.a3">회원가입</a> │ 
+	 	<a href="view.a3?viewpage=/A0000003/jsp/user/userLogin_Form.jsp">로그인</a>
+	 </c:if>
+	 <c:if test="${!empty sessionScope.user_id}">
+	 	${sessionScope.user_auth}
+		<%-- <a href="adminImageList.a1"> ${sessionScope.admin_id}</a>  --%>
+		<a href="userLogout.a3">로그아웃</a>
+	 </c:if>
 </body>
 </html>
