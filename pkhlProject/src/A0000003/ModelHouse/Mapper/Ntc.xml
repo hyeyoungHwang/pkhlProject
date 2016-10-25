@@ -78,6 +78,7 @@
 				,REG_DT
 		FROM BSNS_NTC_BOARD 
 		WHERE 1=1
+		AND USE_YN = 'Y'
 		AND NTC_SN = #ntc_sn#
 		AND BSNS_CODE = #bsns_code#
 	</select>
@@ -95,8 +96,8 @@
 	<!-- Notie 게시글 수정 -->
 	<update id="NtcDAO.ntcUpdate" parameterClass="returnMap">
 		UPDATE BSNS_NTC_BOARD 
-		SET NTC_TITLE = #notice_title#
-		   ,NTC_CONTENT = #notice_content#
+		SET NTC_TITLE = #ntc_title#
+		   ,NTC_CONTENT = #ntc_content#
 		WHERE 1=1
 		AND USE_YN = 'Y'
 		AND NTC_SN = #ntc_sn#
