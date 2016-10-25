@@ -15,13 +15,16 @@ public class NtcUpdateCommand implements A0000003Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		HttpSession session = request.getSession();
+		
 		request.setCharacterEncoding("UTF-8");
 
 		NtcDAO ntcDao = new NtcDAO();
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 	
-		paramMap.put("ntc_num",request.getParameter("ntc_num"));
+		paramMap.put("ntc_sn",request.getParameter("ntc_sn"));
+		paramMap.put("bsns_code",session.getAttribute("bsns_code"));
 		paramMap.put("ntc_title",request.getParameter("ntc_title"));
 		paramMap.put("ntc_content",request.getParameter("ntc_content"));
 

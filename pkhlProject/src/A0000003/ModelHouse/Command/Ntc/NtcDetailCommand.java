@@ -14,10 +14,11 @@ public class NtcDetailCommand implements A0000003Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HttpSession session = request.getSession();
 		NtcDAO ntcDao = new NtcDAO();
 		String viewpage = "";	// view∆‰¿Ã¡ˆ
 
-		
 		if(request.getParameter("divisioncode") == null || request.getParameter("divisioncode").equals("N")){
 			viewpage = "/A0000003/jsp/ntc/ntcDetail.jsp";
 		}else if(request.getParameter("divisioncode").equals("U")){
@@ -26,7 +27,7 @@ public class NtcDetailCommand implements A0000003Command {
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("ntc_sn", Integer.parseInt(request.getParameter("ntc_sn")));
-
+		paramMap.put("bsns_code",session.getAttribute("bsns_code"));
 		Map<String,Object> resultMap = ntcDao.ntcDetail(paramMap);
 
 		request.setAttribute("ntcDetail", resultMap);
