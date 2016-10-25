@@ -13,11 +13,11 @@
 	<input type="hidden" name="pageNum" value="${pageNum}">
 	<input type="hidden" name="searchType" value="${searchType}">
 	<input type="hidden" name="searchValue" value="${searchValue}">
-	<input type="hidden" name="ntc_sn" value="${ntcDetail.ntc_sn}">
+	<input type="hidden" name="ntc_sn" value="${ntcDetail.NTC_SN}">
 
 	<table border = "1">
 		<tr>
-			<td>번호</td><td>${ntcDetail.NTC_NUM}</td>
+			<td>번호</td><td>${ntcDetail.NTC_SN}</td>
 			<td>조회수</td><td>${ntcDetail.NTC_HIT}</td>
 		</tr>
 		<tr>
