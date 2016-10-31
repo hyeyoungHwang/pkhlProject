@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org/DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+	<typeAlias alias="returnMap" type="java.util.HashMap"/>
+	
+	<select id="ImgDAO.imgList" resultClass="returnMap">
+		SELECT	IMG_SN
+			  	, BSNS_CODE
+				, USER_ID
+				, IMG_TITLE
+				, IMG_CONTENT
+				, IMG_FILE_NM
+				, IMG_HIT
+				, USE_YN
+				, REG_ID
+				, DATE_FORMAT(REG_DT,"%Y-%m-%d") AS REG_DT
+				, UPD_ID 
+				, DATE_FORMAT(UPD_DT,"%Y-%m-%d") AS UPD_DT 
+		FROM	BSNS_IMG_BOARD 
+		WHERE	1=1 
+				AND USE_YN='Y'
+				AND BSNS_CODE = #bsns_code#
+		<isNotEmpty property="searchValue">
+			<isEqual property="searchType" compareValue="listNum">
+				AND IMG_SN = #searchValue#
+			</isEqual>
+			<isEqual property="searchType" compareValue="writeName">
+				AND USER_ID LIKE CONCAT('%',#searchValue#,'%')
+			</isEqual>
+			<isEqual property="searchType" compareValue="titlecontent">
+				AND CONCAT(IMG_TITLE,IMG_CONTENT) LIKE CONCAT('%',#searchValue#,'%')
+			</isEqual>
+		</isNotEmpty>
+		ORDER BY IMG_SN DESC
+		LIMIT #startRow# , #listsize#
+	</select>
+   
+	<!-- 게시글 카운트 -->
+	<select id="ImgDAO.imgListCount" parameterClass="returnMap" resultClass="java.lang.Integer">
+		SELECT	COUNT(*) 
+		FROM	BSNS_IMG_BOARD 
+		WHERE	1=1
+				AND USE_YN ='Y'
+				AND BSNS_CODE = #bsns_code#
+		<isNotEmpty property="searchValue">
+			<isEqual property="searchType" compareValue="listNum">
+				AND IMG_SN = #searchType#
+			</isEqual>
+			<isEqual property="searchType" compareValue="writeName">
+         		AND USER_ID LIKE CONCAT('%',#searchValue#,'%')
+         	</isEqual>
+         	<isEqual property="searchType" compareValue="titlecontent">
+         		AND CONCAT(IMG_TITLE,IMG_CONTENT) LIKE CONCAT('%',#searchValue#,'%')
+         	</isEqual>
+      	</isNotEmpty>
+	</select>
+
+	<insert id="ImgDAO.imgInsert" parameterClass="returnMap">
+		INSERT INTO	
+			BSNS_IMG_BOARD(
+								IMG_FILE_NM
+								, BSNS_CODE
+								, USER_ID
+								, IMG_TITLE
+								, IMG_CONTENT
+								, REG_ID
+								, REG_DT
+			)
+					VALUES(
+								#img_file_nm#
+								, #bsns_code#
+								, #user_id#
+								, #img_title#
+								, #img_content#
+								, #user_id#
+								, now()
+					)
+	</insert>
+
+
+	<!-- 게시글 상세조회 -->
+	<select id="ImgDAO.imgDetail" parameterClass="returnMap" resultClass="returnMap">
+		SELECT	IMG_SN
+				, USER_ID
+				, IMG_FILE_NM
+				, IMG_TITLE
+				, IMG_CONTENT
+				, IMG_HIT
+				, REG_ID
+				, DATE_FORMAT(REG_DT,"%Y-%m-%d") AS REG_DT
+				, UPD_ID 
+				, DATE_FORMAT(UPD_DT,"%Y-%m-%d") AS UPD_DT
+		FROM 	BSNS_IMG_BOARD 
+		WHERE 	1=1
+				AND USE_YN = 'Y'
+				AND IMG_SN = #img_sn#
+				AND BSNS_CODE = #bsns_code#
+	</select>
+	
+	<!-- Ntc 게시글 조회수 -->
+	<update id="ImgDAO.imgHitUpdate" parameterClass="returnMap">
+		UPDATE BSNS_IMG_BOARD 
+		SET IMG_HIT = IMG_HIT + 1 
+		WHERE 1=1
+		AND USE_YN = 'Y'
+		AND IMG_SN = #img_sn#
+		AND BSNS_CODE = #bsns_code#
+	</update>
+	
+	<update id="ImgDAO.imgDelete" parameterClass="returnMap">
+		UPDATE	BSNS_IMG_BOARD
+		SET		USE_YN='N'
+		WHERE	IMG_SN = #img_sn#
+				AND BSNS_CODE = #bsns_code#
+	</update>
+
+	<update id="ImgDAO.imgUpdate" parameterClass="returnMap">
+		UPDATE	BSNS_IMG_BOARD
+		SET		IMG_FILE_NM = #img_file_nm#
+				, IMG_TITLE = #img_title# 
+				, IMG_CONTENT = #img_content#
+				, UPD_ID = #user_id#
+				, UPD_DT = now()
+		WHERE	IMG_SN = #img_sn#
+	</update>
+	
+	
+</sqlMap>
+	

@@ -29,4 +29,5 @@
       <sqlMap resource = "/A0000003/ModelHouse/Mapper/Join.xml" />
       <sqlMap resource = "/A0000003/ModelHouse/Mapper/Ntc.xml" />
       <sqlMap resource = "/A0000003/ModelHouse/Mapper/User.xml" />
+      <sqlMap resource = "/A0000003/ModelHouse/Mapper/Img.xml" />
 </sqlMapConfig>
